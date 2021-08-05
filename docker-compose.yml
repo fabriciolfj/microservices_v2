@@ -2,7 +2,7 @@ version: '2.1'
 
 services:
   product:
-    build: microservices/product-service
+    image: fabricio211/product-service:1.0.0
     mem_limit: 512m
     environment:
       - SPRING_PROFILES_ACTIVE=docker
@@ -11,7 +11,7 @@ services:
         condition: service_healthy
 
   recommendation:
-    build: microservices/recommendation-service
+    image: fabricio211/recommendation-service:1.0.0
     mem_limit: 512m
     environment:
       - SPRING_PROFILES_ACTIVE=docker
@@ -20,7 +20,7 @@ services:
         condition: service_healthy
 
   review:
-    build: microservices/review-service
+    image: fabricio211/review-service:1.0.0
     mem_limit: 512m
     environment:
       - SPRING_PROFILES_ACTIVE=docker
@@ -29,7 +29,7 @@ services:
         condition: service_healthy
 
   product-composite:
-    build: microservices/product-composite-service
+    image: fabricio211/product-composite-service:1.0.0
     mem_limit: 512m
     ports:
       - "8080:8080"
