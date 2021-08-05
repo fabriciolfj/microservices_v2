@@ -27,7 +27,6 @@ class ProductServiceApplicationTests extends MongoDbTestBase {
     repository.deleteAll();
   }
 
-  @Test
   void getProductById() {
 
     int productId = 1;

@@ -71,7 +71,6 @@ class PersistenceTests extends MongoDbTestBase {
     assertEqualsRecommendation(savedEntity, entityList.get(0));
   }
 
-  @Test
   void duplicateError() {
     assertThrows(DuplicateKeyException.class, () -> {
       RecommendationEntity entity = new RecommendationEntity(1, 2, "a", 3, "c");

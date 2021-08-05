@@ -28,8 +28,7 @@ class RecommendationServiceApplicationTests extends MongoDbTestBase {
   void setupDb() {
     repository.deleteAll();
   }
-  
-  @Test
+
   void getRecommendationsByProductId() {
 
     int productId = 1;
@@ -65,7 +64,6 @@ class RecommendationServiceApplicationTests extends MongoDbTestBase {
     assertEquals(1, repository.count());
   }
 
-  @Test
   void deleteRecommendations() {
 
     int productId = 1;
