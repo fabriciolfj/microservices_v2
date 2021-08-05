@@ -13,6 +13,8 @@ import com.github.api.core.review.ReviewService;
 import com.github.api.exceptions.InvalidInputException;
 import com.github.microservices.core.review.persistence.ReviewEntity;
 import com.github.util.http.ServiceUtil;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @RestController
 public class ReviewServiceImpl implements ReviewService {
@@ -33,7 +35,7 @@ public class ReviewServiceImpl implements ReviewService {
   }
 
   @Override
-  public Review createReview(Review body) {
+  public Mono<Review> createReview(Review body) {
     try {
       ReviewEntity entity = mapper.apiToEntity(body);
       ReviewEntity newEntity = repository.save(entity);
@@ -47,7 +49,7 @@ public class ReviewServiceImpl implements ReviewService {
   }
 
   @Override
-  public List<Review> getReviews(int productId) {
+  public Flux<Review> getReviews(int productId) {
 
     if (productId < 1) {
       throw new InvalidInputException("Invalid productId: " + productId);
@@ -63,7 +65,7 @@ public class ReviewServiceImpl implements ReviewService {
   }
 
   @Override
-  public void deleteReviews(int productId) {
+  public Mono<Void> deleteReviews(int productId) {
     LOG.debug("deleteReviews: tries to delete reviews for the product with productId: {}", productId);
     repository.deleteAll(repository.findByProductId(productId));
   }

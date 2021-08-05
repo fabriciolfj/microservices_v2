@@ -23,6 +23,8 @@ import com.github.api.core.review.ReviewService;
 import com.github.api.exceptions.InvalidInputException;
 import com.github.api.exceptions.NotFoundException;
 import com.github.util.http.HttpErrorInfo;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Component
 public class ProductCompositeIntegration implements ProductService, RecommendationService, ReviewService {
@@ -56,7 +58,7 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
   }
 
   @Override
-  public Product createProduct(Product body) {
+  public Mono<Product> createProduct(Product body) {
 
     try {
       String url = productServiceUrl;
@@ -73,7 +75,7 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
   }
 
   @Override
-  public Product getProduct(int productId) {
+  public Mono<Product> getProduct(int productId) {
 
     try {
       String url = productServiceUrl + "/" + productId;
@@ -90,7 +92,7 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
   }
 
   @Override
-  public void deleteProduct(int productId) {
+  public Mono<Void> deleteProduct(int productId) {
     try {
       String url = productServiceUrl + "/" + productId;
       LOG.debug("Will call the deleteProduct API on URL: {}", url);
@@ -103,7 +105,7 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
   }
 
   @Override
-  public Recommendation createRecommendation(Recommendation body) {
+  public Mono<Recommendation> createRecommendation(Recommendation body) {
 
     try {
       String url = recommendationServiceUrl;
@@ -120,7 +122,7 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
   }
 
   @Override
-  public List<Recommendation> getRecommendations(int productId) {
+  public Flux<Recommendation> getRecommendations(int productId) {
 
     try {
       String url = recommendationServiceUrl + "?productId=" + productId;
@@ -140,7 +142,7 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
   }
 
   @Override
-  public void deleteRecommendations(int productId) {
+  public Mono<Void> deleteRecommendations(int productId) {
     try {
       String url = recommendationServiceUrl + "?productId=" + productId;
       LOG.debug("Will call the deleteRecommendations API on URL: {}", url);
@@ -153,7 +155,7 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
   }
 
   @Override
-  public Review createReview(Review body) {
+  public Mono<Review> createReview(Review body) {
 
     try {
       String url = reviewServiceUrl;

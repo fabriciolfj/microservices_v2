@@ -13,6 +13,7 @@ import com.github.api.core.recommendation.Recommendation;
 import com.github.api.core.review.Review;
 import com.github.api.exceptions.NotFoundException;
 import com.github.util.http.ServiceUtil;
+import reactor.core.publisher.Mono;
 
 @RestController
 public class ProductCompositeServiceImpl implements ProductCompositeService {
@@ -31,7 +32,7 @@ public class ProductCompositeServiceImpl implements ProductCompositeService {
   }
 
   @Override
-  public void createProduct(ProductAggregate body) {
+  public Mono<Void> createProduct(ProductAggregate body) {
 
     try {
 
@@ -64,7 +65,7 @@ public class ProductCompositeServiceImpl implements ProductCompositeService {
 
 
   @Override
-  public ProductAggregate getProduct(int productId) {
+  public Mono<ProductAggregate> getProduct(int productId) {
 
     LOG.debug("getCompositeProduct: lookup a product aggregate for productId: {}", productId);
 
@@ -83,7 +84,7 @@ public class ProductCompositeServiceImpl implements ProductCompositeService {
   }
 
   @Override
-  public void deleteProduct(int productId) {
+  public Mono<Void> deleteProduct(int productId) {
 
     LOG.debug("deleteCompositeProduct: Deletes a product aggregate for productId: {}", productId);
 
