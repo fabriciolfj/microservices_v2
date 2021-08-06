@@ -11,7 +11,7 @@ public abstract class MySqlTestBase {
     database.start();
   }
 
-  @DynamicPropertySource
+  //@DynamicPropertySource
   static void databaseProperties(DynamicPropertyRegistry registry) {
     registry.add("spring.datasource.url", database::getJdbcUrl);
     registry.add("spring.datasource.username", database::getUsername);

@@ -19,58 +19,58 @@ import java.util.logging.Level;
 @RestController
 public class ProductServiceImpl implements ProductService {
 
-  private static final Logger LOG = LoggerFactory.getLogger(ProductServiceImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ProductServiceImpl.class);
 
-  private final ServiceUtil serviceUtil;
+    private final ServiceUtil serviceUtil;
 
-  private final ProductRepository repository;
+    private final ProductRepository repository;
 
-  private final ProductMapper mapper;
+    private final ProductMapper mapper;
 
-  @Autowired
-  public ProductServiceImpl(ProductRepository repository, ProductMapper mapper, ServiceUtil serviceUtil) {
-    this.repository = repository;
-    this.mapper = mapper;
-    this.serviceUtil = serviceUtil;
-  }
-
-  @Override
-  public Mono<Product> createProduct(Product body) {
-    checkIdProduct(body.getProductId());
-
-    return Mono.just(mapper.apiToEntity(body))
-            .flatMap(repository::save)
-            .log(LOG.getName(), Level.FINE)
-            .onErrorMap(DuplicateKeyException.class,
-                    ex -> new InvalidInputException("Duplicate key, Product Id: " + body.getProductId()))
-            .map(mapper::entityToApi);
-  }
-
-  @Override
-  public Mono<Product> getProduct(int productId) {
-    checkIdProduct(productId);
-
-    return repository.findByProductId(productId)
-            .log(LOG.getName(), Level.FINE)
-            .map(mapper::entityToApi)
-            .map(dto ->  {
-              dto.setServiceAddress(serviceUtil.getServiceAddress());
-              return dto;
-            })
-            .switchIfEmpty(Mono.defer(() -> Mono.error(new NotFoundException("No product found for productId: " + productId) )));
-  }
-
-  @Override
-  public Mono<Void> deleteProduct(int productId) {
-    checkIdProduct(productId);
-
-    LOG.debug("deleteProduct: tries to delete an entity with productId: {}", productId);
-    return repository.findByProductId(productId).map(e -> repository.delete(e)).flatMap( e-> e);
-  }
-
-  private void checkIdProduct(int productId) {
-    if (productId < 1) {
-      throw new InvalidInputException("Invalid productId: " + productId);
+    @Autowired
+    public ProductServiceImpl(ProductRepository repository, ProductMapper mapper, ServiceUtil serviceUtil) {
+        this.repository = repository;
+        this.mapper = mapper;
+        this.serviceUtil = serviceUtil;
     }
-  }
+
+    @Override
+    public Mono<Product> createProduct(Product body) {
+        checkIdProduct(body.getProductId());
+
+        return Mono.just(mapper.apiToEntity(body))
+                .flatMap(repository::save)
+                .log(LOG.getName(), Level.FINE)
+                .onErrorMap(DuplicateKeyException.class,
+                        ex -> new InvalidInputException("Duplicate key, Product Id: " + body.getProductId()))
+                .map(mapper::entityToApi);
+    }
+
+    @Override
+    public Mono<Product> getProduct(int productId) {
+        checkIdProduct(productId);
+
+        return repository.findByProductId(productId)
+                .log(LOG.getName(), Level.FINE)
+                .map(mapper::entityToApi)
+                .map(dto -> {
+                    dto.setServiceAddress(serviceUtil.getServiceAddress());
+                    return dto;
+                })
+                .switchIfEmpty(Mono.defer(() -> Mono.error(new NotFoundException("No product found for productId: " + productId))));
+    }
+
+    @Override
+    public Mono<Void> deleteProduct(int productId) {
+        checkIdProduct(productId);
+
+        LOG.debug("deleteProduct: tries to delete an entity with productId: {}", productId);
+        return repository.findByProductId(productId).map(e -> repository.delete(e)).flatMap(e -> e);
+    }
+
+    private void checkIdProduct(int productId) {
+        if (productId < 1) {
+            throw new InvalidInputException("Invalid productId: " + productId);
+        }
+    }
 }

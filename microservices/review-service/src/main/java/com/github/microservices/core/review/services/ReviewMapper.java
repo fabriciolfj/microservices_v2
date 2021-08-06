@@ -11,18 +11,18 @@ import com.github.api.core.review.Review;
 @Mapper(componentModel = "spring")
 public interface ReviewMapper {
 
-  @Mappings({
-    @Mapping(target = "serviceAddress", ignore = true)
-  })
-  Review entityToApi(ReviewEntity entity);
+    @Mappings({
+            @Mapping(target = "serviceAddress", ignore = true)
+    })
+    Review entityToApi(ReviewEntity entity);
 
-  @Mappings({
-    @Mapping(target = "id", ignore = true),
-    @Mapping(target = "version", ignore = true)
-  })
-  ReviewEntity apiToEntity(Review api);
+    @Mappings({
+            @Mapping(target = "id", ignore = true),
+            @Mapping(target = "version", ignore = true)
+    })
+    ReviewEntity apiToEntity(Review api);
 
-  List<Review> entityListToApiList(List<ReviewEntity> entity);
+    List<Review> entityListToApiList(List<ReviewEntity> entity);
 
-  List<ReviewEntity> apiListToEntityList(List<Review> api);
+    List<ReviewEntity> apiListToEntityList(List<Review> api);
 }

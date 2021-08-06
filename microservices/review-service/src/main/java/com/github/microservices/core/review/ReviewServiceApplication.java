@@ -16,26 +16,26 @@ import reactor.core.scheduler.Schedulers;
 @ComponentScan("com.github")
 public class ReviewServiceApplication {
 
-  private static final Logger LOG = LoggerFactory.getLogger(ReviewServiceApplication.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ReviewServiceApplication.class);
 
-  private final Integer threadPoolSize;
-  private final Integer taskQueueSize;
+    private final Integer threadPoolSize;
+    private final Integer taskQueueSize;
 
-  @Autowired
-  public ReviewServiceApplication(@Value("${app.threadPoolSize:10}") final Integer threadPoolSize, @Value("${app.taskQueueSize:100}") final Integer taskQueueSize) {
-    this.threadPoolSize = threadPoolSize;
-    this.taskQueueSize = taskQueueSize;
-  }
+    @Autowired
+    public ReviewServiceApplication(@Value("${app.threadPoolSize:10}") final Integer threadPoolSize, @Value("${app.taskQueueSize:100}") final Integer taskQueueSize) {
+        this.threadPoolSize = threadPoolSize;
+        this.taskQueueSize = taskQueueSize;
+    }
 
-  @Bean
-  public Scheduler jdbcScheduler() {
-    return Schedulers.newBoundedElastic(threadPoolSize, taskQueueSize, "jdbc-pool");
-  }
+    @Bean
+    public Scheduler jdbcScheduler() {
+        return Schedulers.newBoundedElastic(threadPoolSize, taskQueueSize, "jdbc-pool");
+    }
 
-  public static void main(String[] args) {
-    ConfigurableApplicationContext ctx = SpringApplication.run(ReviewServiceApplication.class, args);
+    public static void main(String[] args) {
+        ConfigurableApplicationContext ctx = SpringApplication.run(ReviewServiceApplication.class, args);
 
-    String mysqlUri = ctx.getEnvironment().getProperty("spring.datasource.url");
-    LOG.info("Connected to MySQL: " + mysqlUri);
-  }
+        String mysqlUri = ctx.getEnvironment().getProperty("spring.datasource.url");
+        LOG.info("Connected to MySQL: " + mysqlUri);
+    }
 }

@@ -65,6 +65,27 @@ api:
 server.port: 7000
 server.error.include-message: always
 
+spring.cloud.stream:
+  defaultBinder: kafka
+  default.contentType: application/json
+  bindings:
+    products-out-0:
+      destination: products
+      producer:
+        required-groups: auditGroup
+    recommendations-out-0:
+      destination: recommendations
+      producer:
+        required-groups: auditGroup
+    reviews-out-0:
+      destination: reviews
+      producer:
+        required-groups: auditGroup
+
+spring.cloud.stream.kafka.binder:
+  brokers: 127.0.0.1
+  defaultBrokerPort: 9092
+
 app:
   product-service:
     host: localhost
@@ -81,6 +102,9 @@ logging:
     root: INFO
     com.github: DEBUG
 
+management.endpoint.health.show-details: "ALWAYS"
+management.endpoints.web.exposure.include: "*"
+
 ---
 spring.config.activate.on-profile: docker
 
@@ -96,3 +120,5 @@ app:
   review-service:
     host: review
     port: 8080
+
+spring.cloud.stream.kafka.binder.brokers: kafka
