@@ -65,7 +65,7 @@ public class ProductServiceImpl implements ProductService {
         checkIdProduct(productId);
 
         LOG.debug("deleteProduct: tries to delete an entity with productId: {}", productId);
-        return repository.findByProductId(productId).map(e -> repository.delete(e)).flatMap(e -> e);
+        return repository.findByProductId(productId).flatMap(e -> repository.delete(e)).then();
     }
 
     private void checkIdProduct(int productId) {

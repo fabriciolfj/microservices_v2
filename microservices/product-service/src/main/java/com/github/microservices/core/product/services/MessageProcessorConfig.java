@@ -26,7 +26,6 @@ public class MessageProcessorConfig {
     @Bean
     public Consumer<Event<Integer, Product>> messageProcessor() {
         return event -> {
-            LOG.info("Consumer message: {}", event.getData().toString());
             switch (event.getEventType()) {
                 case CREATE:
                     productService.createProduct(event.getData()).block();

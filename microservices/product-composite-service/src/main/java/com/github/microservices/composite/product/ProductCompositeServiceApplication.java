@@ -15,9 +15,11 @@ import org.springframework.boot.actuate.health.CompositeReactiveHealthContributo
 import org.springframework.boot.actuate.health.ReactiveHealthContributor;
 import org.springframework.boot.actuate.health.ReactiveHealthIndicator;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.scheduler.Scheduler;
 import reactor.core.scheduler.Schedulers;
 
@@ -62,18 +64,6 @@ public class ProductCompositeServiceApplication {
   @Autowired
   ProductCompositeIntegration integration;
 
-  @Bean
-  ReactiveHealthContributor coreServices() {
-
-    final Map<String, ReactiveHealthIndicator> registry = new LinkedHashMap<>();
-
-    registry.put("product", () -> integration.getProductHealth());
-    registry.put("recommendation", () -> integration.getRecommendationHealth());
-    registry.put("review", () -> integration.getReviewHealth());
-
-    return CompositeReactiveHealthContributor.fromMap(registry);
-  }
-
   /**
   * Will exposed on $HOST:$PORT/swagger-ui.html
   *
@@ -99,8 +89,9 @@ public class ProductCompositeServiceApplication {
   }
 
   @Bean
-  RestTemplate restTemplate() {
-    return new RestTemplate();
+  @LoadBalanced
+  public WebClient.Builder loadBalancedWebClientBuilder() {
+    return WebClient.builder();
   }
 
   public static void main(String[] args) {

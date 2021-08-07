@@ -29,10 +29,8 @@ services:
         condition: service_healthy
 
   product-composite:
-    image: fabricio211/product-composite
+    image: fabricio211/product-composite-service
     mem_limit: 512m
-    ports:
-      - "8080:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
 
@@ -83,3 +81,15 @@ services:
       - "2181:2181"
     environment:
       - KAFKA_ADVERTISED_HOST_NAME=zookeeper
+
+  eureka:
+    image: fabricio211/eureka-server
+    mem_limit: 512m
+
+  gateway:
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    image: fabricio211/gateway
+    mem_limit: 512m
+    ports:
+      - "8080:8080"

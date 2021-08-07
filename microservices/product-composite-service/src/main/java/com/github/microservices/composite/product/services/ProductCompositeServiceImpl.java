@@ -12,11 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.github.api.core.product.Product;
 import com.github.api.core.recommendation.Recommendation;
 import com.github.api.core.review.Review;
-import com.github.api.exceptions.NotFoundException;
 import com.github.util.http.ServiceUtil;
 import reactor.core.publisher.Mono;
 
-import static java.util.logging.Level.FINE;
 
 @RestController
 public class ProductCompositeServiceImpl implements ProductCompositeService {
