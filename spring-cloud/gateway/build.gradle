@@ -5,7 +5,7 @@ plugins {
 }
 
 
-group = 'se.magnus.springcloud'
+group = 'com.github.fabriciolfj.gateway'
 version = '1.0.0-SNAPSHOT'
 sourceCompatibility = '1.8'
 

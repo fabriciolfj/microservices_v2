@@ -4,7 +4,7 @@ plugins {
     id 'java'
 }
 
-group = 'se.magnus.springcloud'
+group = 'com.github.fabriciolfj.eurekaserver'
 version = '1.0.0-SNAPSHOT'
 sourceCompatibility = '1.8'
 
@@ -22,6 +22,7 @@ jar {
 
 dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.glassfish.jaxb:jaxb-runtime'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

@@ -89,7 +89,11 @@ services:
   gateway:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+      - SERVER_SSL_KEY_STORE=file:/keystore/edge.p12
+      - SERVER_SSL_KEY_SOTRE_PASSWORD=123456
     image: fabricio211/gateway
     mem_limit: 512m
     ports:
-      - "8080:8080"
+      - "8443:8443"
+    volumes:
+      - $PWD/keystore:/keystore

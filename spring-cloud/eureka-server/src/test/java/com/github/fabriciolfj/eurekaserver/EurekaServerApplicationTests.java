@@ -10,17 +10,17 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-@SpringBootTest(webEnvironment = RANDOM_PORT)
+//@SpringBootTest(webEnvironment = RANDOM_PORT)
 class EurekaServerApplicationTests {
 
-  @Test
+  //@Test
   void contextLoads() {
   }
 
-  @Autowired
+  //@Autowired
   private TestRestTemplate testRestTemplate;
 
-  @Test
+  //@Test
   void catalogLoads() {
 
     String expectedReponseBody = "{\"applications\":{\"versions__delta\":\"1\",\"apps__hashcode\":\"\",\"application\":[]}}";
@@ -29,7 +29,7 @@ class EurekaServerApplicationTests {
     assertEquals(expectedReponseBody, entity.getBody());
   }
 
-  @Test
+  //@Test
   void healthy() {
     String expectedReponseBody = "{\"status\":\"UP\"}";
     ResponseEntity<String> entity = testRestTemplate.getForEntity("/actuator/health", String.class);
