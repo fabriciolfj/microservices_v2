@@ -26,3 +26,6 @@
 - nesse token extra contém como id o email do usuário (ou username).
 - o token extra é assinado digitalmente
 - como o mesmo é assinado digitalmente, o aplicativo client confia nas informações, validando a assinatura digital, utilizando chaves publicas do servidor de autorização.
+
+### Observção
+- spring authorization server encontra-se na etapa experimental, no qual foi utilizado nesse projeto.
