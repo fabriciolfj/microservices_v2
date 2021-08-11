@@ -48,3 +48,12 @@
 public class OpenApiConfig {}
 
 ```
+
+### Resilience4j
+- Em uma arquitetura de microservices, precisamos manter nossos serviços resilientes, ou seja, que se recuperem de erros que podem ocorrer.
+- Existem algumas abordagens, as que se destacam são:
+  - circuitbreaker: diante a falhas, uma rota alternativa pode ser chamada, o circuitbreaker chama essa rota quando aberto, semi aberto ele checa tempos em tempos a rota original se esta ok, se sinal positivo, circuito e fechado e volta a rotina normal, se negativo, voltamos a rota alternativa.
+  - retry: podemos configurar um número de retentativas (é indicado para rotas idempotentes)
+  - time limit: tempo limite de espera, a uma chamada a outro servico por exemplo.
+
+- O resilience4j possui os mecanismos salientados acima e muito mais, alem de funcionar em ambientes reativos e imperativos.
