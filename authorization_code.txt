@@ -1,0 +1,1 @@
+https://localhost:8443/oauth2/authorize?response_type=code&client_id=writer&redirect_uri=https://my.redirect.uri&scope=product:write&state=35725

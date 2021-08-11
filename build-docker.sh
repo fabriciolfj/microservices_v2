@@ -14,6 +14,9 @@ docker build -t fabricio211/gateway . ;
 cd /home/spark/repositorios/microservices_v2/spring-cloud/eureka-server/
 docker build -t fabricio211/eureka-server . ;
 
+cd /home/spark/repositorios/microservices_v2/spring-cloud/authorization-server/
+docker build -t fabricio211/authorization-server . ;
+
 docker push fabricio211/product-composite-service;
 docker push fabricio211/product-service;
 docker push fabricio211/recommendation-service;

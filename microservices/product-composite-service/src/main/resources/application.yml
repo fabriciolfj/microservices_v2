@@ -4,6 +4,17 @@ springdoc:
   packagesToScan: com.github.microservices.composite.product
   pathsToMatch: /**
 
+  swagger-ui:
+    oauth2-redirect-url: https://localhost:8443/webjars/swagger-ui/oauth2-redirect.html
+    oauth:
+      clientId: writer
+      clientSecret: secret
+      useBasicAuthenticationWithAccessCodeGrant: true
+  oAuthFlow:
+    authorizationUrl: https://localhost:8443/oauth2/authorize
+    tokenUrl: https://localhost:8443/oauth2/token
+
+
 api:
 
   common:
@@ -99,6 +110,8 @@ app.eureka-server: localhost
 app:
   eureka-username: u
   eureka-password: p
+  eureka-server: localhost
+  auth-server: localhost
 
 eureka:
   client:
@@ -113,6 +126,7 @@ eureka:
 management.endpoint.health.show-details: "ALWAYS"
 management.endpoints.web.exposure.include: "*"
 
+spring.security.oauth2.resourceserver.jwt.issuer-uri: http://${app.auth-server}:9999
 ---
 spring.config.activate.on-profile: docker
 
@@ -120,6 +134,7 @@ server.port: 8080
 
 app:
   eureka-server: eureka
+  auth-server: auth-server
   product-service:
     host: product
     port: 8080

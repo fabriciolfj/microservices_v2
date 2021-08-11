@@ -30,7 +30,6 @@ services:
 
   product-composite:
     image: fabricio211/product-composite-service
-    mem_limit: 512m
     environment:
       - SPRING_PROFILES_ACTIVE=docker
 
@@ -97,3 +96,14 @@ services:
       - "8443:8443"
     volumes:
       - $PWD/keystore:/keystore
+
+  auth-server:
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    image: fabricio211/authorization-server
+    mem_limit: 512m
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "http://localhost:9999/actuator/health"]
+      interval: 5s
+      timeout: 2s
+      retries: 60
