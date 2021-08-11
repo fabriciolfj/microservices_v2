@@ -57,3 +57,7 @@ public class OpenApiConfig {}
   - time limit: tempo limite de espera, a uma chamada a outro servico por exemplo.
 
 - O resilience4j possui os mecanismos salientados acima e muito mais, alem de funcionar em ambientes reativos e imperativos.
+
+#### Resilience4j spring boot
+- Resilience4j pode enviar métricas ao actuator do spring e utiliza o oap para isso
+- alem de integrar-se também com prometheus.
