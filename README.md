@@ -29,3 +29,22 @@
 
 ### Observção
 - spring authorization server encontra-se na etapa experimental, no qual foi utilizado nesse projeto.
+
+### Abaixo um exemplo de configuração, para requisitar o token via swagger:
+```
+@SecurityScheme(
+  name = "security_auth", type = SecuritySchemeType.OAUTH2,
+  flows = @OAuthFlows(
+    clientCredentials = @OAuthFlow(
+      authorizationUrl = "${springdoc.oAuthFlow.authorizationUrl}",
+      tokenUrl = "${springdoc.oAuthFlow.tokenUrl}",
+      scopes = {
+        @OAuthScope(name = "product:read", description = "read scope"),
+        @OAuthScope(name = "product:write", description = "write scope")
+      }
+    )
+  )
+)
+public class OpenApiConfig {}
+
+```
