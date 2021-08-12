@@ -54,10 +54,20 @@ public class OpenApiConfig {}
 - Existem algumas abordagens, as que se destacam são:
   - circuitbreaker: diante a falhas, uma rota alternativa pode ser chamada, o circuitbreaker chama essa rota quando aberto, semi aberto ele checa tempos em tempos a rota original se esta ok, se sinal positivo, circuito e fechado e volta a rotina normal, se negativo, voltamos a rota alternativa.
   - retry: podemos configurar um número de retentativas (é indicado para rotas idempotentes)
-  - time limit: tempo limite de espera, a uma chamada a outro servico por exemplo.
+  - time limit: tempo limite de espera, a uma chamada a outro servico por exemplo, caso ultrapasse uma exceção será lançada.
 
 - O resilience4j possui os mecanismos salientados acima e muito mais, alem de funcionar em ambientes reativos e imperativos.
 
 #### Resilience4j spring boot
 - Resilience4j pode enviar métricas ao actuator do spring e utiliza o oap para isso
 - alem de integrar-se também com prometheus.
+- Alguns parâmetros de configuração utilizados neste projeto:
+  - slidingWindowType: tipo de contagem para abertura do circuitbreaker
+  - slidingWindowSite: numero de chamadas com falha
+  - failureRateThreshold: percentual com base no parametro acima, exemplo: caso o slidingWindowSite for 5, e o failureRateThreshold 50 (50% de 5), passou de 3 chamadas com falha, o cirtuitbreaker será aberto.
+  - automaticTransitionFromOpenToHalfOpenEnabled: abertura para o circuit semi aberto, automaticamente
+  - waitDurationInOpenState: tempo em que o circuitbreaker manterá aberto, até que mude para o semi aberto.
+  - permittedNumberOfCallsInHalfOpenState: número de chamdas no estado semiaberto, para definir se fecha ou mantem aberto o circuitbreaker.
+  - ignoreExceptions: algumas exceções que náo são usadas como falha, para lógica do circuitbreaker (exceptions de negócio pro exemplo).
+  - registerHealthIndicator: registrar no actuator
+  - allowHealIndicatorToFail: não mudar o indicador de estado de saúde, caso o circuitbreaker esteja aberto ou semi aberto (colocar false).
