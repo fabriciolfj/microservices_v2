@@ -9,23 +9,22 @@ import static reactor.core.publisher.Flux.empty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.net.URI;
 
 import com.github.api.core.event.Event;
+import com.github.util.http.ServiceUtil;
+import io.github.resilience4j.circuitbreaker.CallNotPermittedException;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
+import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.actuate.health.Health;
 import org.springframework.cloud.stream.function.StreamBridge;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
 import com.github.api.core.product.Product;
 import com.github.api.core.product.ProductService;
 import com.github.api.core.recommendation.Recommendation;
@@ -37,10 +36,10 @@ import com.github.api.exceptions.NotFoundException;
 import com.github.util.http.HttpErrorInfo;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
+import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Scheduler;
-import reactor.core.scheduler.Schedulers;
 
 @Component
 public class ProductCompositeIntegration implements ProductService, RecommendationService, ReviewService {
@@ -55,6 +54,7 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
     private static final String REVIEW_SERVICE_URL = "http://review";
 
     private final StreamBridge streamBridge;
+    private final ServiceUtil serviceUtil;
 
     private final Scheduler publishEventScheduler;
 
@@ -63,12 +63,14 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
             @Qualifier("publishEventScheduler") Scheduler publishEventScheduler,
             WebClient.Builder webClient,
             ObjectMapper mapper,
-            StreamBridge streamBridge) {
+            StreamBridge streamBridge,
+            ServiceUtil serviceUtil) {
 
         this.publishEventScheduler = publishEventScheduler;
         this.webClient = webClient.build();
         this.mapper = mapper;
         this.streamBridge = streamBridge;
+        this.serviceUtil = serviceUtil;
     }
 
     @Override
@@ -78,8 +80,16 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
     }
 
     @Override
-    public Mono<Product> getProduct(int productId) {
-        String url = PRODUCT_SERVICE_URL + "/product/" + productId;
+    @Retry(name = "product")
+    @TimeLimiter(name = "product")
+    @CircuitBreaker(name = "product", fallbackMethod = "getProductFallbackValue")
+    public Mono<Product> getProduct(int productId,
+                                    int delay,
+                                    int faultPercent) {
+        final URI url = UriComponentsBuilder
+                .fromUriString(PRODUCT_SERVICE_URL + "/product/{productId}?delay={delay}&faultPercent={faulPercent}")
+                .build(productId, delay, faultPercent);
+
         LOG.debug("Will call the getProduct API on URL: {}", url);
 
         return webClient.get().uri(url).retrieve().bodyToMono(Product.class).log(LOG.getName(), FINE).onErrorMap(WebClientResponseException.class, ex -> handleException(ex));
@@ -175,5 +185,19 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
         } catch (IOException ioex) {
             return ex.getMessage();
         }
+    }
+
+    private Mono<Product> getProductFallbackValue(int productId, int delay, int faultPercent, CallNotPermittedException ex) {
+
+        LOG.warn("Creating a fail-fast fallback product for productId = {}, delay = {}, faultPercent = {} and exception = {} ",
+                productId, delay, faultPercent, ex.toString());
+
+        if (productId == 13) {
+            String errMsg = "Product Id: " + productId + " not found in fallback cache!";
+            LOG.warn(errMsg);
+            throw new NotFoundException(errMsg);
+        }
+
+        return Mono.just(new Product(productId, "Fallback product" + productId, productId, serviceUtil.getServiceAddress()));
     }
 }

@@ -42,7 +42,7 @@ class ProductCompositeServiceApplicationTests {
   private ProductCompositeIntegration compositeIntegration;
 
   //@BeforeEach
-  void setUp() {
+  /*void setUp() {
 
     when(compositeIntegration.getProduct(PRODUCT_ID_OK))
       .thenReturn(Mono.just(new Product(PRODUCT_ID_OK, "name", 1, "mock-address")));
@@ -95,5 +95,5 @@ class ProductCompositeServiceApplicationTests {
       .expectStatus().isEqualTo(expectedStatus)
       .expectHeader().contentType(APPLICATION_JSON)
       .expectBody();
-  }
+  }*/
 }

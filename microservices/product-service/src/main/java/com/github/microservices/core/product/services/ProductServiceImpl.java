@@ -5,6 +5,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.github.api.core.product.Product;
 import com.github.api.core.product.ProductService;
@@ -14,6 +16,8 @@ import com.github.microservices.core.product.persistence.ProductEntity;
 import com.github.util.http.ServiceUtil;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
+import java.util.Random;
 import java.util.logging.Level;
 
 @RestController
@@ -26,6 +30,8 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository repository;
 
     private final ProductMapper mapper;
+
+    private final Random randomNumberGenerator = new Random();
 
     @Autowired
     public ProductServiceImpl(ProductRepository repository, ProductMapper mapper, ServiceUtil serviceUtil) {
@@ -47,16 +53,20 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Mono<Product> getProduct(int productId) {
+    public Mono<Product> getProduct(int productId,
+                                    int delay,
+                                    int faultPercent) {
         checkIdProduct(productId);
 
         return repository.findByProductId(productId)
+                .map(e -> throwErrorIfBadLuck(e, faultPercent))
                 .log(LOG.getName(), Level.FINE)
                 .map(mapper::entityToApi)
                 .map(dto -> {
                     dto.setServiceAddress(serviceUtil.getServiceAddress());
                     return dto;
                 })
+                .delayElement(Duration.ofSeconds(delay))
                 .switchIfEmpty(Mono.defer(() -> Mono.error(new NotFoundException("No product found for productId: " + productId))));
     }
 
@@ -72,5 +82,29 @@ public class ProductServiceImpl implements ProductService {
         if (productId < 1) {
             throw new InvalidInputException("Invalid productId: " + productId);
         }
+    }
+
+    private ProductEntity throwErrorIfBadLuck(final ProductEntity entity, final int faultPercent) {
+        if (faultPercent == 0) {
+            return entity;
+        }
+
+        int random = getRandomNumber(1 , 100);
+
+        if (faultPercent < random) {
+            LOG.debug("not exception: percent " + faultPercent + " calculated: " + random);
+        } else {
+            throw new RuntimeException("Somethin went wrong....");
+        }
+
+        return entity;
+    }
+
+    private int getRandomNumber(final int min, final int max) {
+        if (max < min) {
+            throw new IllegalArgumentException("Max must be greter than min");
+        }
+
+        return randomNumberGenerator.nextInt((max - min) + 1) + min;
     }
 }
