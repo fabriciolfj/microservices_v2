@@ -94,6 +94,8 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://${app.auth-server}:9999
+
+spring.sleuth.reactor.instrumentation-type: decorate-on-last
 ---
 spring.config.activate.on-profile: docker
 

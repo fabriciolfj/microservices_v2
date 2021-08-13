@@ -30,7 +30,7 @@ import org.springframework.test.web.servlet.MockMvc;
  * Tests for {@link OAuth2AuthorizationServerApplication}.
  *
  * @author Josh Cummings
- */
+ *//*
 @SpringBootTest(properties = {"eureka.client.enabled=false", "spring.cloud.config.enabled=false"})
 @AutoConfigureMockMvc
 class OAuth2AuthorizationServerApplicationTests {
@@ -63,3 +63,4 @@ class OAuth2AuthorizationServerApplicationTests {
 
 }
 //CHECKSTYLE:ON
+*/
