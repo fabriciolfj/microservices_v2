@@ -71,3 +71,19 @@ public class OpenApiConfig {}
   - ignoreExceptions: algumas exceções que náo são usadas como falha, para lógica do circuitbreaker (exceptions de negócio pro exemplo).
   - registerHealthIndicator: registrar no actuator
   - allowHealIndicatorToFail: não mudar o indicador de estado de saúde, caso o circuitbreaker esteja aberto ou semi aberto (colocar false).
+
+
+### Alguns recursos do spring que facilitam seu uso no kubernetes
+- graceful shutdown: antes da aplicação se desligar, ela conclui as solicitações pendentes (diante uma configuração de tempo) e deixa de acertar novas solicitações.
+
+```
+server.shutdown: graceful
+spring.lifecycle.timeout-per-shutdown-phase: 10s
+```
+- liveness e readiness: são endpoints expostos pelo actuator, onde podemos configurar no nosso deployment. Esses endpoints serão utilizados para indicar se o pod terá que ser restartado ou se esta ok e se o mesmo pode receber solicitações.
+- exemplo abaixo demonstra que a aplicação somente poderá aceitar solicitações, caso a comunicação com kafka, banco de dados e mongo, estejam funcionando.
+```
+management.endpoint.health.probes.enabled: true
+management.endpoint.health.group.readiness.include: kafka, db, mongo
+```
+
