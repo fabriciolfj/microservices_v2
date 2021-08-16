@@ -87,3 +87,17 @@ management.endpoint.health.probes.enabled: true
 management.endpoint.health.group.readiness.include: kafka, db, mongo
 ```
 
+### helm
+- gerenciador de pacotes, de código aberto, para o kubernetes.
+- neste projeto, faremos adoção de templates comuns, onde seus valores serão substituidos pelos dados do Values.yml ou Chart.yml.
+- Para funcionamento de templates, necessitamos da seguinte estrutura de diretórios dentro do projeto:
+```
+helm
+ common
+   templates
+     _descricao.yml
+ componentes
+   pasta com nome do microservice
+     charts do microservice
+ environments
+```
