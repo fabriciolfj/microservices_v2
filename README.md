@@ -101,3 +101,4 @@ helm
      charts do microservice
  environments
 ```
+- os templates commons, que serão base para os manifestos, deverão iniciar com ` _ `, para o helm não criar manifestos deles.
