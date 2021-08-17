@@ -103,3 +103,25 @@ helm
 ```
 - os templates commons, que serão base para os manifestos, deverão iniciar com ` _ `, para o helm não criar manifestos deles.
 - _helpers.tpl, possui a lógica para atribuir nomes no manifesto
+
+#### Comandos helm
+
+##### Para ver o manifesto gerado
+```
+helm dependency update components/product
+helm template components/product -s templates/deployment.yml
+```
+- Existe o arquivo  update-helm.sh na raiz do projeto, que atualizará o repositorio do helm, com todos os componentes.
+- em seguida, podemos executar o comando abaixo, para ver como ficou os manifestos de cada um.
+```
+helm template kubernetes/helm/environments/dev-env/ -- apos atualizacao 
+```
+- para testar se os manifestos gerados, serão aceitos pelo cluster, podemos executar o comando abaixo:
+
+```
+helm install --dry run --debug microservices kubernetes/helm/environments/dev-env
+```
+- para instalação, incluindo o namespace, utilize o comando:
+```
+helm install microservice-v2 kubernetes/helm/environments/dev-env -n microservices-v2 --create-namespace
+```
