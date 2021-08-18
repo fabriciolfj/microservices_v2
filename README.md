@@ -111,8 +111,8 @@ helm
 helm dependency update components/product
 helm template components/product -s templates/deployment.yml
 ```
-- Existe o arquivo  update-helm.sh na raiz do projeto, que atualizará o repositorio do helm, com todos os componentes.
-- em seguida, podemos executar o comando abaixo, para ver como ficou os manifestos de cada um.
+- Existe o arquivo chamado update-helm.sh na raiz do projeto, que atualizará o repositorio do helm para todos os componentes.
+- em seguida, podemos executar o comando abaixo para checar como ficou os manifestos de cada um.
 ```
 helm template kubernetes/helm/environments/dev-env/ -- apos atualizacao 
 ```
@@ -124,4 +124,15 @@ helm install --dry run --debug microservices kubernetes/helm/environments/dev-en
 - para instalação, incluindo o namespace, utilize o comando:
 ```
 helm install microservice-v2 kubernetes/helm/environments/dev-env -n microservices-v2 --create-namespace
+```
+- para voltar uma versão
+```
+helm rollback microservices-v2  -n microservices-v2 -wait
+```
+- Alguns comandos para ajudar no acompanhamento do deploy
+```
+kubectl wait --timeout=600s --for=condition=ready pod --all
+kubectl get pods -o json | jq .items[].spec.containers[].image
+kubectl exec -it 
+kubectl exec -it config-server-68d9cfd55-gd7gd  -- curl localhost/actuator/health/readiness -s | jq .
 ```
