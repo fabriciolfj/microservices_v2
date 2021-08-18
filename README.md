@@ -134,5 +134,5 @@ helm rollback microservices-v2  -n microservices-v2 -wait
 kubectl wait --timeout=600s --for=condition=ready pod --all
 kubectl get pods -o json | jq .items[].spec.containers[].image
 kubectl exec -it 
-kubectl exec -it config-server-68d9cfd55-gd7gd  -- curl localhost/actuator/health/readiness -s | jq .
+kubectl exec -it deploy/config-server  -- curl http://localhost/actuator/health/readiness -s | jq .
 ```
