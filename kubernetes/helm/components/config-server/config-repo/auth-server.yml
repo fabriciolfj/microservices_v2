@@ -1,8 +1,6 @@
 server.port: 9999
 server.forward-headers-strategy: framework
 
-spring.application.name: auth-server
-
 logging:
   level:
     root: INFO
@@ -11,3 +9,8 @@ logging:
 spring.config.activate.on-profile: docker
 
 server.port: 80
+
+---
+spring.config.activate.on-profile: prod
+
+logging.level.root: WARN

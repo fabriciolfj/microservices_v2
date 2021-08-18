@@ -1,9 +1,9 @@
 {{- define "common.service" -}}
-{{- $common := dict "Values" .Values.common -}} 
-{{- $noCommon := omit .Values "common" -}} 
-{{- $overrides := dict "Values" $noCommon -}} 
-{{- $noValues := omit . "Values" -}} 
-{{- with merge $noValues $overrides $common -}}
+{{- $common := dict "Values" .Values.common -}}  #com base no values do commum
+{{- $noCommon := omit .Values "common" -}}  #valores do microservice especifico
+{{- $overrides := dict "Values" $noCommon -}}  #obtem valores da variavel noCommon
+{{- $noValues := omit . "Values" -}} #todos os valores incorporados, sem ser do arquivo Values.yml
+{{- with merge $noValues $overrides $common -}} #caso o valor da chave exista no noValues, ela será utilizada em vez do common (dar preferencia para as chaves espeficicas do servico)
 apiVersion: v1
 kind: Service
 metadata:
@@ -15,7 +15,7 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-{{ toYaml .Values.service.ports | indent 4 }}
+{{ toYaml .Values.service.ports | indent 4 }} ##formatar como yml, com 4 espacos
   selector:
     app.kubernetes.io/name: {{ include "common.name" . }}
 {{- end -}}

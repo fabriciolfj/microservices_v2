@@ -30,6 +30,8 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
       - CONFIG_SERVER_USR=${CONFIG_SERVER_USR}
       - CONFIG_SERVER_PWD=${CONFIG_SERVER_PWD}
+    ports:
+      - "8080:8080"
     depends_on:
       mysql:
         condition: service_healthy
@@ -127,8 +129,9 @@ services:
     mem_limit: 1024m
     environment:
       - STORAGE_TYPE=mem
-      - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - RABBIT_ADDRESSES=rabbitmq
     ports:
       - 9411:9411
     depends_on:
-      - kafka
+      rabbitmq:
+        condition: service_healthy

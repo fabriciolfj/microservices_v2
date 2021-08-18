@@ -21,7 +21,6 @@
             <option value="$PROJECT_DIR$/spring-cloud" />
             <option value="$PROJECT_DIR$/spring-cloud/authorization-server" />
             <option value="$PROJECT_DIR$/spring-cloud/config-server" />
-            <option value="$PROJECT_DIR$/spring-cloud/eureka-server" />
             <option value="$PROJECT_DIR$/spring-cloud/gateway" />
             <option value="$PROJECT_DIR$/util" />
           </set>
