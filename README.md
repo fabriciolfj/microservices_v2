@@ -87,6 +87,8 @@ management.endpoint.health.probes.enabled: true
 management.endpoint.health.group.readiness.include: kafka, db, mongo
 ```
 
+- ingress: é utilizado como um gateway, e no podemos adicionar certificado no mesmo.
+
 ### helm
 - gerenciador de pacotes, de código aberto, para o kubernetes.
 - neste projeto, faremos adoção de templates comuns, onde seus valores serão substituidos pelos dados do Values.yml ou Chart.yml.
