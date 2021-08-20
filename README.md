@@ -93,6 +93,10 @@ management.endpoint.health.group.readiness.include: kafka, db, mongo
 - neste projeto adotamos o cert-manager, que e um controlador de gerenciamento de certificados para kubernetes.
 - utilizaremos certificados auto-assinados no proprio namespace. (não indicado para ambientes de produção, neste caso faça uso de um emissor)
 - no script, install-cert-manager.sh, possui os passos ncessários para instalação do certificado.
+- para ver como os certificados são criados, na subida dos serviços dentro do kubernetes
+```
+kubectl get certificates -w --output-watch-events
+```
 
 ### helm
 - gerenciador de pacotes, de código aberto, para o kubernetes.
