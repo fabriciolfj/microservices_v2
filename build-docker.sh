@@ -15,19 +15,9 @@ docker build -t fabricio211/recommendation-service . ;
 cd /home/spark/repositorios/microservices_v2/microservices/review-service;
 docker build -t fabricio211/review-service . ;
 
-cd /home/spark/repositorios/microservices_v2/spring-cloud/gateway
-docker build -t fabricio211/gateway . ;
-
-
-
-cd /home/spark/repositorios/microservices_v2/spring-cloud/config-server/
-docker build -t fabricio211/config-server . ;
-
 
 docker push fabricio211/product-composite-service;
 docker push fabricio211/product-service;
 docker push fabricio211/recommendation-service;
 docker push fabricio211/review-service;
-docker push fabricio211/gateway;
-docker push fabricio211/config-server;
 docker push fabricio211/authorization-server;

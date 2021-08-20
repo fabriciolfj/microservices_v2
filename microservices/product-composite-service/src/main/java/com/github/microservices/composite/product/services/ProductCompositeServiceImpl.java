@@ -72,6 +72,7 @@ public class ProductCompositeServiceImpl implements ProductCompositeService {
                 integration.getReviews(productId).collectList()
                         .doOnError(ex -> LOG.warn("getCompositeProduct failed: {}", ex.toString()))
                         .log(LOG.getName(), Level.FINE));
+
     }
 
     @Override
