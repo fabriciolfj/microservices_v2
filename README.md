@@ -89,6 +89,10 @@ management.endpoint.health.group.readiness.include: kafka, db, mongo
 
 - ingress: é utilizado como um gateway, e no podemos adicionar certificado no mesmo.
 
+### Certificado kubernetes
+- neste projeto adotamos o cert-manager, que e um controlador de gerenciamento de certificados para kubernetes.
+- utilizaremos certificados auto-assinados no proprio namespace. (não indicado para ambientes de produção, neste caso faça uso de um emissor)
+
 ### helm
 - gerenciador de pacotes, de código aberto, para o kubernetes.
 - neste projeto, faremos adoção de templates comuns, onde seus valores serão substituidos pelos dados do Values.yml ou Chart.yml.
