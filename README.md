@@ -97,6 +97,10 @@ management.endpoint.health.group.readiness.include: kafka, db, mongo
 ```
 kubectl get certificates -w --output-watch-events
 ```
+- para ver o vencimento do certificado:
+```
+kubectl describe cert tls-certificate
+``` 
 
 ### helm
 - gerenciador de pacotes, de código aberto, para o kubernetes.
