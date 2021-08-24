@@ -154,3 +154,16 @@ kubectl exec -it deploy/config-server  -- curl http://localhost/actuator/health/
 
 ### Service mesh
 - é uma camada de infraestrutura que observa e controla a comuniucação entre os microservices.
+- os recursos de uma malha de serviço, são:
+  -  observabilidade
+  -  segurança
+  -  aplicação de políticas
+  -  resiliência
+  -  gerenciamento de tráfico
+
+
+#### Funcionamento de uma malha de serviço (service mesh)
+- cada pod possui um proxy, onde toda a informação trafegada.
+- o proxy é configurado em tempo de excução, por um plano de controle do service mesh, usando apis expostas pelo proxy
+- o plano de controle coleta dados de telemetria
+- possui um plano de dados, para lidar com o tráfico externo
