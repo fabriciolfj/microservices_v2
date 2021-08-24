@@ -167,3 +167,11 @@ kubectl exec -it deploy/config-server  -- curl http://localhost/actuator/health/
 - o proxy é configurado em tempo de excução, por um plano de controle do service mesh, usando apis expostas pelo proxy
 - o plano de controle coleta dados de telemetria
 - possui um plano de dados, para lidar com o tráfico externo
+
+#### Implementação
+- Uma implementação popular, referente ao service mesh, é o istio
+- o istio é apoio por diversos subprojetos, como:
+  - kiali: provém observabilidade do service mesh
+  - tracing: manipula e visualiza informações distribuídas de rastreamento.
+  - prometheus: armazena os dados de métricas.
+  - grafana: visualiza as métricas e outros dados relacionados, coletados pelo prometheus.
