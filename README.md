@@ -151,3 +151,6 @@ kubectl get pods -o json | jq .items[].spec.containers[].image
 kubectl exec -it 
 kubectl exec -it deploy/config-server  -- curl http://localhost/actuator/health/readiness -s | jq .
 ```
+
+### Service mesh
+- é uma camada de infraestrutura que observa e controla a comuniucação entre os microservices.
