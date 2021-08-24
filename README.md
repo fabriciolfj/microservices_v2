@@ -176,3 +176,10 @@ kubectl exec -it deploy/config-server  -- curl http://localhost/actuator/health/
   - prometheus: armazena os dados de métricas.
   - grafana: visualiza as métricas e outros dados relacionados, coletados pelo prometheus.
 - istio injeta um novo recipiente ao pod do microservice, conhecido como sidecar, onde auxilia na coleta de informações.
+
+##### Objetos istio utilizados nesse projeto.
+- gateway: utilizado para lidar com o tráfego de entrada ou saida da malha de serviço, para isso ele depende de um serviço virtual, que encaminha a um service kubernetes.
+- virtual service: é utilizado para definir regras de roteamento na malha de serviço, como por exemplo: direcionar tráfego de entrada de um gateway a um serviço kubernetes.
+- destination rule: utilizado para definir políticas e regras de tráfego que são roteados para um serviço específico.
+  - obs: a diferença entre um destinationrule e um virtualservice, virutalservice é utilizado para configurar um roteamento a um serviço, e o destination rule é configurado paraa lidar com o trafego de um serviço selecionado (criptografar os dados por exemplo).
+- peerAuthentication: responsável pela autenticação entre serviços, dentro da malha.
