@@ -175,3 +175,4 @@ kubectl exec -it deploy/config-server  -- curl http://localhost/actuator/health/
   - tracing: manipula e visualiza informações distribuídas de rastreamento.
   - prometheus: armazena os dados de métricas.
   - grafana: visualiza as métricas e outros dados relacionados, coletados pelo prometheus.
+- istio injeta um novo recipiente ao pod do microservice, conhecido como sidecar, onde auxilia na coleta de informações.
