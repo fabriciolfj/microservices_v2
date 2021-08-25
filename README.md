@@ -214,3 +214,7 @@ kubectl apply -n istio-system -f https://raw.githubusercontent.com/istio/istio/$
 kubectl apply -n istio-system -f https://raw.githubusercontent.com/istio/istio/${istio_version}/samples/addons/grafana.yaml
 ```
 - observação: o istio gateway ele é do tipo loadbalance, ou seja, para acessar os serviços do mesmo, precisa um balanceador de carga a frente do cluster. Para sanar essa situação em um ambiente local, podemos utilizar o minikube com o comando tunnel.
+- aplicando o helm com o gateway, destinationrule e o virtual service, que encontra-se no projeto:
+```
+helm upgrade --install istio-hands-on-addons kubernetes/helm/environments/istio-system -n istio-system --wait
+```
