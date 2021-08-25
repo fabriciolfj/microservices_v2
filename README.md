@@ -29,6 +29,8 @@
 
 ### Observção
 - spring authorization server encontra-se na etapa experimental, no qual foi utilizado nesse projeto.
+- o authorization server, será responsável pela geração do token jwt.
+- os serviços bateram no authorization server, afim de obter o jwks (chave pública), para autenticar o token jwt.
 
 ### Abaixo um exemplo de configuração, para requisitar o token via swagger:
 ```
@@ -183,3 +185,5 @@ kubectl exec -it deploy/config-server  -- curl http://localhost/actuator/health/
 - destination rule: utilizado para definir políticas e regras de tráfego que são roteados para um serviço específico.
   - obs: a diferença entre um destinationrule e um virtualservice, virutalservice é utilizado para configurar um roteamento a um serviço, e o destination rule é configurado paraa lidar com o trafego de um serviço selecionado (criptografar os dados por exemplo).
 - peerAuthentication: responsável pela autenticação entre serviços, dentro da malha.
+- requestauthentication: responsável pela autenticação do usuário final, onde suporte tokens jwt.
+- authorizationPolicy: usado para fornecer controle de acesso no istio.
