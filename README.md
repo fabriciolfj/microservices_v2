@@ -218,3 +218,7 @@ kubectl apply -n istio-system -f https://raw.githubusercontent.com/istio/istio/$
 ```
 helm upgrade --install istio-hands-on-addons kubernetes/helm/environments/istio-system -n istio-system --wait
 ```
+- acessando os recursos do istio:
+  - minikube tunnel, para simular um loadbalance externo ao cluster
+  - pegar o ip do gateway ingress do istio: kubectl get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}'
+  - mapear no etc/hosts, para os endereços dos recursos.
