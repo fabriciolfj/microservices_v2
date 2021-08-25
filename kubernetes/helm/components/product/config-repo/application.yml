@@ -6,7 +6,6 @@ spring.rabbitmq:
   port: 5672
 
 spring.cloud.stream.defaultBinder: rabbit
-spring.zipkin.sender.type: rabbit
 spring.sleuth.sampler.probability: 1.0
 
 # WARNING: Exposing all management endpoints over http should only be used during development, must be locked down in production!

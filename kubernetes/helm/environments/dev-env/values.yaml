@@ -26,10 +26,6 @@ secrets:
     SPRING_RABBITMQ_USERNAME: rabbit-user-dev
     SPRING_RABBITMQ_PASSWORD: rabbit-pwd-dev
 
-  rabbitmq-zipkin-credentials:
-    RABBIT_USER: rabbit-user-dev
-    RABBIT_PASSWORD: rabbit-pwd-dev
-
   mongodb-server-credentials:
     MONGO_INITDB_ROOT_USERNAME: mongodb-user-dev
     MONGO_INITDB_ROOT_PASSWORD: mongodb-pwd-dev
@@ -84,6 +80,3 @@ product-composite:
   envFromSecretRefs:
     - rabbitmq-credentials
 
-zipkin-server:
-  envFromSecretRefs:
-    - rabbitmq-zipkin-credentials
