@@ -136,7 +136,7 @@ helm template kubernetes/helm/environments/dev-env/ -- apos atualizacao
 - para testar se os manifestos gerados, serão aceitos pelo cluster, podemos executar o comando abaixo:
 
 ```
-helm install --dry run --debug microservices kubernetes/helm/environments/dev-env
+helm install --dry-run --debug microservices kubernetes/helm/environments/dev-env
 ```
 - para instalação, incluindo o namespace, utilize o comando:
 ```
