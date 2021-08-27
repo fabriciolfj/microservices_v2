@@ -80,3 +80,9 @@ product-composite:
   envFromSecretRefs:
     - rabbitmq-credentials
 
+destinationRules:
+  - name: product-composite
+  - name: auth-server
+  - name: product
+  - name: recommendation
+  - name: review
