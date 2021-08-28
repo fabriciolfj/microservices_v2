@@ -222,3 +222,9 @@ helm upgrade --install istio-hands-on-addons kubernetes/helm/environments/istio-
   - minikube tunnel, para simular um loadbalance externo ao cluster
   - pegar o ip do gateway ingress do istio: kubectl get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}'
   - mapear no etc/hosts, para os endereços dos recursos.
+
+
+### TSL vs SSL
+- SSL significa Secure Sockets Layer, um tipo de segurança digital que permite a comunicação criptografada entre um site e um navegador. Atualmente a tecnologia se encontra depreciada e está sendo completamente substituída pelo TLS.
+
+- TLS é uma sigla que representa Transport Layer Security e certifica a proteção de dados de maneira semelhante ao SSL. Como o SSL não está mais de fato em uso, esse é o termo correto que deveria ser utilizado
