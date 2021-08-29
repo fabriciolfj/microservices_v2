@@ -4,7 +4,7 @@ metadata:
   name: hands-on-certificate
 spec:
   commonName: minikube.me
-  subject:
+  subject: #dados opcionais
     countries:
     - my-country
     localities:
@@ -32,6 +32,6 @@ spec:
   - elasticsearch.minikube.me
   - mail.minikube.me
   issuerRef:
-    name: ca-issuer
-  secretName: hands-on-certificate
+    name: ca-issuer #qual emissor
+  secretName: hands-on-certificate #local aonde armazenara o certificado
 

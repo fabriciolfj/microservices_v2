@@ -6,7 +6,7 @@ metadata:
 spec:
   action: ALLOW
   rules:
-  - {}
+  - {} #aqui não esta configurada nenhuma regra de autorizacao
   selector:
     matchLabels:
       app.kubernetes.io/name: product-composite
@@ -20,17 +20,17 @@ spec:
     mode: PERMISSIVE
 ---
 apiVersion: security.istio.io/v1beta1
-kind: RequestAuthentication
+kind: RequestAuthentication #authentica cada requisicao
 metadata:
   name: product-composite-request-authentication
 spec:
   jwtRules:
   - forwardOriginalToken: true
-    issuer: http://auth-server
-    jwksUri: http://auth-server.hands-on.svc.cluster.local/oauth2/jwks
+    issuer: http://auth-server #fara uso do servico auth-server
+    jwksUri: http://auth-server.hands-on.svc.cluster.local/oauth2/jwks #para validar, fará uso da chave do auth-server jwks
   selector:
     matchLabels:
-      app.kubernetes.io/name: product-composite
+      app.kubernetes.io/name: product-composite #servico protegido
 ---
 apiVersion: networking.istio.io/v1beta1
 kind: Gateway

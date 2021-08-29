@@ -14,7 +14,7 @@ spec:
 {{- end }}
   trafficPolicy:
     tls:
-      mode: ISTIO_MUTUAL
+      mode: ISTIO_MUTUAL #permite seguranca dentro da malha de servicos (internamente), ou seja, garantir a autenticidade do servico e seus clientes dentro do cluster.
 ---
 {{- end -}}
 {{- end -}}
