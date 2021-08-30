@@ -235,3 +235,10 @@ helm upgrade --install istio-hands-on-addons kubernetes/helm/environments/istio-
 ### Resiliencia com istio
 - podemos optar em lidar com resiliencia dentro do service, como o uso do resilience4j, ou a nivel de estrutura, como istio.
 - o que determina o uso de um ou de outro, depende, por exemplo: caso não tenho tempo de ajustar o microservice para lidar com resiliencia, posso adotar o recurso do istio.
+
+
+
+## EFK
+- elastichsearch: banco de dados aonde são armazenados os logs
+- fluentd: o coletor dos logs nos microservices e inseridos no elastichsearch
+- kibana: frontend para consultar os logs e analisar.
