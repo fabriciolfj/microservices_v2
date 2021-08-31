@@ -240,5 +240,5 @@ helm upgrade --install istio-hands-on-addons kubernetes/helm/environments/istio-
 
 ## EFK
 - elastichsearch: banco de dados aonde são armazenados os logs
-- fluentd: o coletor dos logs nos microservices e inseridos no elastichsearch
+- fluentd: o coletor dos logs nos microservices e inseridos no elastichsearch, https://fluentular.herokuapp.com/ para testar as configuracoes do configmap fluentd
 - kibana: frontend para consultar os logs e analisar.
