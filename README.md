@@ -242,3 +242,7 @@ helm upgrade --install istio-hands-on-addons kubernetes/helm/environments/istio-
 - elastichsearch: banco de dados aonde são armazenados os logs
 - fluentd: o coletor dos logs nos microservices e inseridos no elastichsearch, https://fluentular.herokuapp.com/ para testar as configuracoes do configmap fluentd
 - kibana: frontend para consultar os logs e analisar.
+
+## Prometheus e grafana
+- prometheus: efetua a coleta de métricas da aplicação, por exemplo: desempenho
+- grafana: um dashboard, onde podemos montar alarmes, graficos, com base nas métricas coletadas pelo prometheus.
